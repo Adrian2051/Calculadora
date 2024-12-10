@@ -55,6 +55,7 @@ export const useCalculadora = () =>{
             signo = '-';
             numeroTemporal = numero.substring(1);
         }
+        
         if (numeroTemporal.length > 1) {
             return setNumero(signo+ numeroTemporal.slice(0,-1));
         } else {
@@ -71,24 +72,11 @@ export const useCalculadora = () =>{
         setNumero('0');
     }
 
-    const operacionDividir = () => {
-        establecerUltimoNumero();
-        UltimaOperacion.current = Operadores.dividir;
-    }
 
-    const operacionMultiplicar = () => {
-        establecerUltimoNumero();
-        UltimaOperacion.current = Operadores.multiplicar;
-    }
 
-    const operacionRestar = () => {
+    const operaciones = (tipo: Operadores) => {
         establecerUltimoNumero();
-        UltimaOperacion.current = Operadores.restar;
-    }
-
-    const operacionSumar = () => {
-        establecerUltimoNumero();
-        UltimaOperacion.current = Operadores.sumar;
+        UltimaOperacion.current = tipo;
     }
 
     const calcularResultado = () => {
@@ -116,7 +104,7 @@ export const useCalculadora = () =>{
                 throw new Error(`La operación ( ${operacion} ) no está implementada `)
         }
     }
-
+    
     const resultado = () => {
         const resultado = calcularResultado();
         setFormula(`${resultado}`);
@@ -152,16 +140,13 @@ export const useCalculadora = () =>{
 
     return {
         // Propiedades
-        formula, numero, numeroAnterior,
+        formula, numero, numeroAnterior, Operadores,
         //Metodos
         construirNumero,
         clean,
         cambiarSigno,
         borrarDigito,
-        operacionDividir,
-        operacionMultiplicar,
-        operacionRestar,
-        operacionSumar,
+        operaciones,
         calcularResultado,
         resultado
     }
